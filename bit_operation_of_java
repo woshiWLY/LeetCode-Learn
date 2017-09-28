@@ -1,0 +1,42 @@
+operator:
+| : bit or
+    0011 | 0101 = 0111
+    iff both operator is 0, the result is 0
+
+& : bit and
+    0011 & 0101 = 0001
+    iff both operator is 1, the result is 1
+    
+~ : bit not
+    ~0 = 1;  ~1 = 0
+    
+^ : bit exclusive or
+    0011 ^ 0101 = 0110
+    iff two operator is different, the result is 1
+    
+<< : logical left shift
+    00000010 << 2 = 00001000
+    the lower position can be set as 0
+    the sign bit will not changed
+   
+>> : logical right shift
+    00001000 >> 2 = 00000010
+    the higher position can be set as the number same with sign bit
+    
+>>>: unsigned logical right shift
+    ignoring the signed bit, and complement 0 on the left
+    
+ 
+Apply:
+    1. m*(2^n) = m<<n
+    2. if n&1 == 1, n is odd, if n&1 == 0, n is even
+    
+    
+    true form: add an sign bit on the left of the code; 0 represents positive, 1 represents negative
+                -2: 10000010 2:00000010
+    complemental code: if it is a negative number, not the every bits of true form except sign bit
+                       if it is a positive number, the complemental code is its true form.
+                       2: 00000010 -2:111111101
+    ones-complemental code: if it is a positive number, the ones-completal code is tis true form.
+                            if it is a negative number, the ones-completal code is not the bits except the sign bit and then plus one
+                            2: 00000010 -2:11111110
