@@ -1,0 +1,46 @@
+Problem Description:
+Initially, there is a Robot at position (0, 0). Given a sequence of its moves, judge if this robot makes a circle,
+which means it moves back to the original place.
+
+The move sequence is represented by a string. And each move is represent by a character. 
+The valid robot moves are R (Right), L (Left), U (Up) and D (down). 
+The output should be true or false representing whether the robot makes a circle.
+
+My thought:
+  Through observation, we can get the conclusion that if the number of D equals to number of U and the number of L equals
+  to the number of R, the robot back to original. So what I want to do is to check the times that U,L,D,R appears.
+  
+My Solution:
+  class Solution {
+    public boolean judgeCircle(String moves) {
+        if  ((moves.length()&1) == 1)
+            return false;
+        
+        int UD = 0;
+        int LR = 0;
+        for(int i = 0; i < moves.length(); i++) {
+            if(moves.charAt(i) == 'U')
+                UD++;
+            else if(moves.charAt(i) == 'D')
+                UD--;
+            else if(moves.charAt(i) == 'L')
+                LR++;
+            else if(moves.charAt(i) == 'R')
+                LR--;
+        }
+        if(UD == 0 && LR == 0)
+            return true;
+        else
+            return false;
+    }
+}
+
+Comments: periform not very well
+
+2-line Solution:
+   public boolean judgeCircle(String moves) {
+        moves=" " + moves + " ";
+        return moves.split("L").length==moves.split("R").length && moves.split("U").length == moves.split("D").length;
+    }
+    
+    But the time cost is heavy!!
