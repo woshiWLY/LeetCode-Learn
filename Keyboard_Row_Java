@@ -111,4 +111,7 @@ Compare & Analysis:
       Also, we can use toArray() to cast List to array.
       str.toArray(new String[0]); //set it to be an empty array
       str.toArray(new String[str.size()])//set it to be the size of list.
+     
+Attention!!!
+      the encapsulation of char is Character!
                   
