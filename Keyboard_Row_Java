@@ -1,0 +1,114 @@
+Problem Description:
+
+
+
+My thought: Can use a hash map to map the character(Characer) to specific row(Integer) and then check wether all of characters
+            that compose to the word is on the same row.
+
+
+
+
+My solution:
+class Solution {
+    public String[] findWords(String[] words) {
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('q',1);
+        map.put('w',1);
+        map.put('e',1);
+        map.put('r',1);
+        map.put('t',1);
+        map.put('y',1);
+        map.put('u',1);
+        map.put('i',1);
+        map.put('o',1);
+        map.put('p',1);
+        map.put('a',2);
+        map.put('s',2);
+        map.put('d',2);
+        map.put('f',2);
+        map.put('g',2);
+        map.put('h',2);
+        map.put('j',2);
+        map.put('k',2);
+        map.put('l',2);
+        map.put('z',3);
+        map.put('x',3);
+        map.put('c',3);
+        map.put('v',3);
+        map.put('b',3);
+        map.put('n',3);
+        map.put('m',3);
+        
+        //List<String> result = new List<String>();
+        String[] res = new String[words.length];
+        int cur_i = 0;
+        for(String w: words) {
+            String temp = w.toLowerCase();
+            int first = map.get(temp.charAt(0));
+            boolean same = true;
+            for(int i = 1; i < w.length(); i++) {
+                if(map.get(temp.charAt(i)) != first){
+                    same = false;
+                     break;
+                }
+            }
+            if(same){
+                res[cur_i] = w;
+                cur_i++;
+            }
+                //result.add(w);
+        }
+        String[] fin = new String[cur_i];
+        for(int i = 0; i < cur_i; i++) {
+            fin[i] = res[i];
+        }
+        return fin;
+    }
+    
+}
+
+
+
+
+Best Performance Solution:
+class Solution {
+        
+    private static int[] alphabet = { 1, 2, 2, 1, 0, 1, 1, 1, 0, 1, 1, 1, 2, 2, 0, 0, 0, 0, 1, 0, 0, 2, 0, 2, 0, 2 };
+    
+    public String[] findWords(String[] words) {
+        List<String> list = new ArrayList<String>();
+        
+        for (String word : words) {
+            if (isOneLiner(word)) {
+                list.add(word);   
+            }
+        }
+        
+        return list.toArray(new String[0]);
+    }
+    
+    public boolean isOneLiner(String word) {
+        if (word == null || word.length() <= 1) {
+            return true;
+        }
+        
+        String lower = word.toLowerCase();
+        int row = alphabet[lower.charAt(0) - 'a'];
+        
+        for (int i = 1 ; i < word.length() ; i++) {
+            if (alphabet[lower.charAt(i) - 'a'] != row) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
+
+Compare & Analysis: 
+      Notice that the character can be used to do some Mathematical operation like subtraction. We can take advantage of this
+      characteristic to simplify our method.
+      Also, we can use toArray() to cast List to array.
+      str.toArray(new String[0]); //set it to be an empty array
+      str.toArray(new String[str.size()])//set it to be the size of list.
+                  
