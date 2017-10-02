@@ -58,3 +58,24 @@ Analysis: Using an new array to store the times that some number occurs and the 
           S(d) = (b1 - a1) + (b2 - a2) + .... + (bn - an)
           S(ai) = (S(2n) - s(d))/2  
   
+Advanced MySolution:
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        int [] map = new int[20001];
+        for(int i = 0; i < nums.length; i++) {
+            map[10000+nums[i]]++;
+        }
+        int sum = 0;
+        int count = 0;
+        for(int i = 0; i < 20001; i++) {
+            while(map[i] != 0) {
+                count++;
+                if(count % 2 != 0) {
+                    sum += (i-10000);
+                }
+                map[i]--;
+            }
+        }
+        return sum;
+    }
+}
