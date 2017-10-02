@@ -1,0 +1,69 @@
+Problem Discreption:
+Given a positive integer, output its complement number. The complement strategy is to flip the bits of its binary 
+representation.
+
+Note:
+1.The given integer is guaranteed to fit within the range of a 32-bit signed integer.
+2.You could assume no leading zero bit in the integer’s binary representation.
+
+Example 1:
+Input: 5
+Output: 2
+Explanation: The binary representation of 5 is 101 (no leading zero bits), and its complement is 010. So you need to output 2.
+
+Example 2:
+Input: 1
+Output: 0
+Explanation: The binary representation of 1 is 1 (no leading zero bits), and its complement is 0. So you need to output 0.
+
+
+
+
+My thought: Because if flip the binary representation, I tried to find solution from getting the Binary representation.
+            And it also said that is strictly 32bit Integer
+
+
+
+
+
+My solution:
+class Solution {
+    public int findComplement(int num) {
+        int complement = 0;
+        boolean flip = false;
+        for(int i = 30; i > -1; i--) {
+            int temp = (int)Math.pow(2,i);
+            if((num / temp) != 0) {
+                if(!flip){
+                    flip = true;
+                }
+                num -= temp;
+            } else {
+                if(flip) {
+                    complement += temp;
+                }
+            }
+        }
+        return complement;
+    }
+}
+
+
+Best performance solution:
+class Solution {
+    public int findComplement(int num) {
+        int complement = 0;
+        int bit = 1;
+        while (num != 0) {
+            if (num % 2 == 0) {
+                complement = complement | bit;
+            }
+            bit = bit * 2;
+            num /= 2;
+        }
+        return complement;
+    }
+}
+
+Compare:
+  Using the way to cast decimal number to binary number to solve this problem can save times.
