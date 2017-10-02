@@ -1,0 +1,60 @@
+Problem Discreption:
+Given an array of 2n integers, your task is to group these integers into n pairs of integer, say (a1, b1), (a2, b2), ..., 
+(an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+
+Example 1:
+Input: [1,4,3,2]
+
+Output: 4
+Explanation: n is 2, and the maximum sum of pairs is 4 = min(1, 2) + min(3, 4).
+
+Note:
+  1.n is a positive integer, which is in the range of [1, 10000].
+  2.All the integers in the array will be in the range of [-10000, 10000].
+
+
+
+My thought: From ovbserving the question, we can conclude that we can sort the array in ascending way and then add the a[0],
+a[1]....a[2n-1] to get the maximum sum.
+
+My solution:
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        int result = 0;
+        for(int i = 0; i < n; i += 2 ){
+            result += nums[i];
+        }
+        return result;
+    }
+}
+
+However, it uses the sort method and its complexity will be at least nlogn
+
+The best performance solution:
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        int [] map = new int [20001];
+    	for (int i : nums) {
+    		map[i + 10000]++;
+		}
+    	int d = 0;
+    	int n = 0;
+    	for (int i = 0; i < 20001; ++i) {
+			if(map[i] != 0){
+				n += (map[i] + 1 - d) / 2 * (i - 10000);
+				d = (map[i] - d + 2) % 2;
+			}
+		}
+    	return n;
+    }
+}
+
+Analysis: Using an new array to store the times that some number occurs and the index is the (number+10000).
+          Assuming for every tuple(ai, bi), bi>=ai.
+          what we want the maximum sum is S(ai) = a1 + a2 + a3 + a4 + .....+ an
+          S(2n) = a1 + b1+ a2 + b2 +...+an+bn
+          S(d) = (b1 - a1) + (b2 - a2) + .... + (bn - an)
+          S(ai) = (S(2n) - s(d))/2  
+  
