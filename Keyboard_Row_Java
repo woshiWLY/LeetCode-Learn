@@ -113,5 +113,5 @@ Compare & Analysis:
       str.toArray(new String[str.size()])//set it to be the size of list.
      
 Attention!!!
-      the encapsulation of char is Character!
+      the encapsulation of char is Character!!
                   
