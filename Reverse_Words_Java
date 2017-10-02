@@ -1,0 +1,63 @@
+Problem Description:
+
+
+
+My thought: using string method split to split the sentence to words and reverse words and then constitute the sentence.
+
+
+
+
+My solution:
+class Solution {
+    public String reverseWords(String s) {
+        String ret = "";
+        String[] arr = s.split(" ");
+        for(int i = 0; i < arr.length; i++){
+            String rw = Revers(arr[i]);
+            ret += rw;
+            ret += " ";
+        }
+        return ret.substring(0, ret.length()-1);
+    }
+    private String Revers(String w) {
+        String ret = "";
+        for(int i = w.length()-1; i > -1; i--)
+            ret += w.charAt(i);
+        return ret;
+    }
+}
+
+
+
+The Best Performance Solution:
+/*Java String is immutable. So change it to char array and create new String after reverse*/
+class Solution {
+    public String reverseWords(String s) {
+        int start = 0;
+        int end = 0;
+        char[] c = s.toCharArray();
+        while (start < c.length) {
+            while (s.charAt(start) ==  ' ' && start < c.length) start++;
+            if (start == c.length) break;
+            end = s.indexOf(' ',start);
+            if (end == -1) end = s.length();
+            reverseWord(c, start, end-1);
+            start = end;
+        }
+        return new String(c);
+    }
+    private void reverseWord(char[] s, int start, int end) {
+        for (int i=0; i<(end-start+1)/2;i++) {
+            char temp = s[start+i];
+            s[start+i] = s[end-i];
+            s[end-i] = temp;
+        }
+    }
+}
+
+
+
+Compare and Analysis:
+      String is immutable. And consider to change it to char array.
+      str.toCharArray()
+      new String(char_array) to formulate string
