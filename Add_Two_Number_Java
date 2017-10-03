@@ -1,0 +1,152 @@
+Problem Description：
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and 
+each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+
+
+My thought: add the digit and consider the carry, so we can use recursion
+
+
+
+My Solution:
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int fromLast = 0;
+        return addTwoNodes(l1, l2, 0);
+    }
+    private ListNode addTwoNodes(ListNode N1, ListNode N2, int fromLast) {
+        int nodeV = 0;
+        //ListNode NN1 = N1;
+        //ListNode NN1 = N2;
+        ListNode NN1, NN2;
+        if(N1 == null && N2 == null) {
+            if(fromLast == 0)
+                return null;
+            else
+                return new ListNode(fromLast);
+        }
+        if(N1 == null){
+            nodeV = N2.val + fromLast;
+            NN1 = null;
+            NN2 = N2.next;
+            if(nodeV < 10) {
+                ListNode n = new ListNode(nodeV);
+                n.next = N2.next;
+            }
+        } else if(N2 == null) {
+            nodeV = N1.val + fromLast;
+            NN2 = null;
+            NN1 = N1.next;
+            if(nodeV < 10) {
+                ListNode n = new ListNode(nodeV);
+                n.next = N1.next;
+            }
+        } else {
+            nodeV = N1.val + N2.val + fromLast;
+            NN1 = N1.next;
+            NN2 = N2.next;
+        }
+         
+        
+        int toFormer = nodeV/10;
+        nodeV = nodeV%10;
+        ListNode ret = new ListNode(nodeV);
+        ret.next = addTwoNodes(NN1, NN2, toFormer);
+        
+        
+        
+        return ret;
+    }
+}
+
+
+
+
+Best Performance Solution:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode(l1.val + l2.val);
+        ListNode head = result; 
+        if(result.val >= 10){
+            if(result.next == null){
+                result.next = new ListNode(1);
+            }
+            result.val -= 10;
+        }
+        
+        while(l1.next != null && l2.next != null){
+            l1 = l1.next;
+            l2 = l2.next;
+            if(result.next == null){
+                result.next = new ListNode(0);
+            }
+            result = result.next;
+            result.val += (l1.val + l2.val);
+            
+            if(result.val >= 10){
+                result.val -= 10;
+                if(result.next == null){
+                result.next = new ListNode(1);
+                }
+            }
+        }
+        
+        while(l1.next != null){
+            l1 = l1.next;
+            if(result.next == null){
+                result.next = new ListNode(0);
+            }
+            result = result.next;
+            result.val += l1.val;
+            
+            if(result.val >= 10){
+                result.val -= 10;
+                if(result.next == null){
+                result.next = new ListNode(1);
+                }
+            }
+        }
+        
+        while(l2.next != null){
+            l2 = l2.next;
+            if(result.next == null){
+                result.next = new ListNode(0);
+            }
+            result = result.next;
+            result.val += l2.val;
+            
+            if(result.val >= 10){
+                result.val -= 10;
+                if(result.next == null){
+                result.next = new ListNode(1);
+                }
+            }
+            
+        }
+        
+        return head;
+    }
+}
+
+
+Compare & Analysis:
